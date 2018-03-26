@@ -1,0 +1,31 @@
+
+p, li {
+    color: #6a6a6a;
+}
+#info {
+    text-align: right;
+}
+.container-main {
+    display: flex;
+    margin-top: 20px;
+}
+.container-secondary {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+.container-canvas {
+    width: 70%;
+}
+.container-controllers {
+    width: 30%;
+}
+#new-point-form input {
+    width: 50%;
+    margin-bottom: 10px;
+}
+canvas {
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+}

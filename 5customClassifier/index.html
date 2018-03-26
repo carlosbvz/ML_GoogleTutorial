@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>KNN Custom Classifier</title>
+
+    <!-- bootstrap css -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+        crossorigin="anonymous">
+    <!-- custom css -->
+    <link rel="stylesheet" href="styles.css">
+
+    <!-- Bootstrap js -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+
+    <!-- chart library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js"></script>
+
+    <!-- chart helper -->
+    <script src="scripts/chart-util.js" defer></script>
+    <!-- Data handler -->
+    <script src="scripts/data-handler.js" defer></script>
+    <!-- KNN -->
+    <script src="scripts/knn.js" defer></script>
+    <!-- custom chart script -->
+    <script src="scripts/chart-custom.js" defer></script>
+
+</head>
+
+<body>
+
+    <div class="container">
+
+        <p id="info">
+            <a class="" data-toggle="collapse" href="#collapseInfo" role="button" aria-expanded="false" aria-controls="collapseInfo">
+                Mostrar/Ocultar Info
+            </a>
+        </p>
+        <div class="collapse show" id="collapseInfo">
+            <div class="card card-body">
+                <p>En el cuadro se muestran todos los datos, en color los de entrenamiento y en gris los de prueba</p>
+                <p>Todos los datos son calculados de manera aleatoria bajo las siguientes condiciones: </p>
+                <ul>
+                    <li>Datos de entrenamiento rojos, arriba de la funcion identidad</li>
+                    <li>Datos de entrenamiento azules, debajo de la funcion identidad</li>
+                    <li>Datos de prueba grises, mitad arriba y mitad abajo de la funcion</li>
+                </ul>
+                <p>El algoritmo implementado es una version muy simple del 'k vecinos más proximos' (KNN por sus siglas en Ingles). Más info sobre este algoritmo 
+                    <a href="https://es.wikipedia.org/wiki/K_vecinos_m%C3%A1s_pr%C3%B3ximos" target="_blank"> por acá.</a> <br>
+                    Pretende usar los datos de entrenamiento para "aprender a distinguir" futuros datos. <br>
+                    Se usan los datos de prueba (grises) que a priori estan determinados para obtener un nivel de exactitud del algormito KNN al intentar evaluar y clasificar los datos de prueba.
+                </p>
+                <p>
+                    Éste trabajo es una adaptación en javascript del algoritmo mostrado en python en el canal de 'Machine learning' de Google en
+                    <a href="https://www.youtube.com/watch?v=AoeEHqVSNOw&t=">Machine Learning Recipes.</a>
+                </p>
+
+                <p id="info">
+                        <a class="" data-toggle="collapse" href="#collapseInfo" role="button" aria-expanded="false" aria-controls="collapseInfo">
+                            Cerrar Info
+                        </a>
+                    </p>
+            </div>
+        </div>
+
+        <div class="container-main">
+            <div class="container-canvas">
+                <canvas id="canvas"></canvas>
+            </div>
+            <div class="container-controllers">
+                <p>
+                    <b>Controles</b>
+                </p>
+
+                <p>Click para generar nuevo set de datos.</p>
+                <button id="randomizeData" class="btn btn-secondary btn-block">Re iniciar</button>
+                <hr>
+                <p>Click para "Entrenar" el algoritmo y realizar prueba con los datos de prueba</p>
+                <button id="calculateData" class="btn btn-primary btn-block">Entrenar</button>
+                <br>
+                <p id="accuracy"></p>
+            </div>
+        </div>
+
+        <div class="container-secondary">
+
+            <div class="train-data">
+
+                <p>Datos de entrenamiento (puntos rojos y azules)</p>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>x</th>
+                            <th>y</th>
+                            <th>tipo</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Calculado programaticamente -->
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="test-data">
+                <p>Datos de prueba (puntos grises)</p>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>x</th>
+                            <th>y</th>
+                            <th>tipo</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Calculado programaticamente -->
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="predicted-data">
+                <p>Datos predichos (calculo puntos grises)</p>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>x</th>
+                            <th>y</th>
+                            <th>tipo</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Calculado programaticamente -->
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+
+    </div>
+
+
+</body>
+
+</html>
